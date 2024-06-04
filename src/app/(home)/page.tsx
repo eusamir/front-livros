@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from 'axios'
 
-export function removeAccents(query: string) {
+function removeAccents(query: string) {
   return query.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }
 
