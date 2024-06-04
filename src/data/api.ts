@@ -1,6 +1,6 @@
 export function api(path: string, init?: RequestInit) {
-  const baseUrl = "http://localhost:3000"
-  const apiPrefix = '/api'
+  const baseUrl = "https://crud-livros.onrender.com"
+  const apiPrefix = '/livro'
 
   const url = new URL(apiPrefix.concat(path), baseUrl)
 

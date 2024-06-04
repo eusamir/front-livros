@@ -4,26 +4,26 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const courseFilterSchema = z.object({
-    course: z.string()
+const bookFilterSchema = z.object({
+    book: z.string()
   })
   
-  type CourseFilterSchema = z.infer<typeof courseFilterSchema>
+  type BookFilterSchema = z.infer<typeof bookFilterSchema>
 export function SearchBar(){
     const router = useRouter()
     const searchParams = useSearchParams()
 
-    const queryCourseURL = searchParams.get('book')
-    const { register, handleSubmit } = useForm<CourseFilterSchema>({
+    const querybookURL = searchParams.get('book')
+    const { register, handleSubmit } = useForm<BookFilterSchema>({
     values: {
-      course: queryCourseURL ?? ''
+      book: querybookURL ?? ''
     }
   })
 
 
-    function handlerFilterBooks({ course }: CourseFilterSchema){
-        if(course){
-            router.push(`?book=${course}`)
+    function handlerFilterBooks({ book }: BookFilterSchema){
+        if(book){
+            router.push(`?book=${book}`)
         } else{
             router.push('/')
         }
@@ -33,7 +33,7 @@ export function SearchBar(){
           <Search className="w-5 h-5 text-zinc-500" />
           <input
             placeholder="Buscar produtos..."
-            {...register('course')}
+            {...register('book')}
             className="flex-1 bg-transparent text-sm outline-none placeholder:text-zinc-500"
             
           />

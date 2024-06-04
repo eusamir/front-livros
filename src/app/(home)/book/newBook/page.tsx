@@ -1,9 +1,8 @@
 'use client'
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import { addProduct } from "../../page";
-import { useRouter } from "next/navigation";
+import Link from "next/link";import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function NewBook() {
     const [title, setTitle] = useState("");
@@ -13,25 +12,20 @@ export default function NewBook() {
     const [release, setRelease] = useState("");
     const [description, setDescription] = useState("");
 
+
     const router = useRouter()
-
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const newProduct = {
-            id: Math.random(),
-            title,
-            slug: title.toLowerCase().replace(/ /g, "-"),
-            pages: pages,
-            image: "/capalivro.png",
-            description: description,
-            autor: author,
-            release: release,
-            category:category
-        };
-
-        addProduct(newProduct);
-        router.push("/")
+        try {
+            const response = await axios.post(
+                `https://crud-livros.onrender.com/livro/create`,
+                {titulo:title, autor:author, pages:pages, category:category, release:release, description:description}
+            );
+            console.log("Livro criado com sucesso:", response.data);
+            router.push(`/`);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
@@ -42,7 +36,6 @@ export default function NewBook() {
                     placeholder="Título"
                     required
                     className="bg-zinc-800 text-white p-3 rounded-md w-[80%] max-w-lg"
-                    value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
                 <input
@@ -50,7 +43,6 @@ export default function NewBook() {
                     placeholder="Autor"
                     required
                     className="bg-zinc-800 text-white p-3 rounded-md w-[80%] max-w-lg"
-                    value={author}
                     onChange={(e) => setAuthor(e.target.value)}
                 />
                 <input
@@ -58,7 +50,6 @@ export default function NewBook() {
                     placeholder="Páginas"
                     required
                     className="bg-zinc-800 text-white p-3 rounded-md w-[80%] max-w-lg"
-                    value={pages}
                     onChange={(e) => setPages(e.target.value)}
                 />
                 <input
@@ -66,7 +57,6 @@ export default function NewBook() {
                     placeholder="Categoria"
                     required
                     className="bg-zinc-800 text-white p-3 rounded-md w-[80%] max-w-lg"
-                    value={category}
                     onChange={(e) => setCategory(e.target.value)}
                 />
                 <input
@@ -74,14 +64,12 @@ export default function NewBook() {
                     placeholder="Lançamento"
                     required
                     className="bg-zinc-800 text-white p-3 rounded-md w-[80%] max-w-lg"
-                    value={release}
                     onChange={(e) => setRelease(e.target.value)}
                 />
                 <textarea
                     placeholder="Descrição"
                     required
                     className="bg-zinc-800 text-white p-3 rounded-md w-[80%] max-w-lg h-32"
-                    value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
                 <button
