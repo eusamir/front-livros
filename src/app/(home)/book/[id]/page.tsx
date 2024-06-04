@@ -39,12 +39,12 @@ const handleDelete = async()=>{
     console.log("erro ao deletar" + err)
   }
 }
-  const book = data?.find(product => product.id == params.id);
+  const book = data?.find((product: { id: any }) => product.id == params.id);
 
     return(
       <>
       <div className="flex gap-20 mt-10">
-      <Image src={"/capalivro.png"} alt="/" height={200} width={200}/>
+      <Image src={"/capa.png"} alt="/" height={200} width={200}/>
       
       <div className="flex flex-col gap-5">
 
